@@ -9,7 +9,7 @@ import sqlite3
 import os.path
 
 root = Tk()
-root.minsize(width=1280, height=720)
+root.minsize(width=1480, height=720)
 
 checkDB = os.path.isfile('test.db')
 
