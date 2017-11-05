@@ -9,7 +9,7 @@ import sqlite3
 import os.path
 
 root = Tk()
-root.minsize(width=1480, height=720)
+root.minsize(width=1280, height=720)
 
 checkDB = os.path.isfile('test.db')
 
@@ -181,6 +181,8 @@ def TaskStr():
         for j in  range (i):
             arrayTaskDesLabel[j] = Label(root, text = arrayTaskDes[j], fg = "#767676", font = "Arial 19",width = 46, height = 1,anchor = "nw",pady = 3,padx = 60,bg = "#EEEFF0")
             arrayTaskCreateLabel[j] = Label(root,text = arrayTaskName[j], fg = "#494949", font = "Arial 30",width = 30,anchor = "nw",height = 1,pady = 10,padx = 60,bg = "#EEEFF0" )
+            arrayTaskDesLabel[j].bind('<Button->',readTask(j))
+            arrayTaskCreateLabel[j].bind('<Button->',readTask(j))
             arrayTaskDesLabel[j].place(x= 300, y= y2)
             arrayTaskCreateLabel[j].place(x=300, y=y1)
             y2 = y2 + 115
