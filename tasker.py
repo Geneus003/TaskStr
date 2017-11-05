@@ -85,6 +85,10 @@ def TaskStr():
 
     def createWindow(event):
 
+        for j in range(i):
+            arrayTaskCreateLabel[j].destroy()
+            arrayTaskDesLabel[j].destroy()
+
         global titleEntCreate
         global a
 
@@ -138,12 +142,40 @@ def TaskStr():
         cancelCreateBut.bind('<Button->', fromCreateTask)
         saveCreateBut.bind('<Button->', fromCreateTaskSave)
 
-    def readTask(indexx):
+
+    def readTask(indextask):
         def readTaskE(event):
-            print(indexx)
+            j = 0
+            for j in range(i):
+                arrayTaskCreateLabel[j].destroy()
+                arrayTaskDesLabel[j].destroy()
+
+            leftpart1.destroy()
+            butTaskstr.destroy()
+            butRemoveTop.destroy()
+            butCalc.destroy()
+            butEditTop.destroy()
+            butCreateTop.destroy()
+
+            labelWithTaskDes = Label(text = arrayTaskDes[indextask])
+            labelWithTaskName = Label(text = arrayTaskName[indextask])
+
+
+            labelWithTaskName.place(x = 100, y = 100)
+            labelWithTaskDes.place(x=200, y=200)
+
+
+
         return readTaskE
 
     def BDandLabels():
+
+        global arrayTaskDes
+        global arrayTaskName
+        global arrayTaskCreateLabel
+        global arrayTaskDesLabel
+        global i
+
         arrayTaskName = []
         arrayTaskDes = []
         arrayTaskCreateLabel = []
