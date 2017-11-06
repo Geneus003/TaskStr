@@ -145,7 +145,11 @@ def TaskStr():
 
     def readTask(indextask):
         def readTaskE(event):
+
+            root["bg"] = "#FAFAFA"
+
             j = 0
+
             for j in range(i):
                 arrayTaskCreateLabel[j].destroy()
                 arrayTaskDesLabel[j].destroy()
@@ -157,13 +161,20 @@ def TaskStr():
             butEditTop.destroy()
             butCreateTop.destroy()
 
-            labelWithTaskDes = Label(text = arrayTaskDes[indextask])
-            labelWithTaskName = Label(text = arrayTaskName[indextask])
 
+            labelTaskName = Label(root, text="Name:", font="Arial 30", height=1, width=5, bd=0, fg="#6D6D6D",bg = "#FAFAFA")
+            labelTaskDes = Label(root,text="Description:", font="Arial 30", height=1, width=11, bd=0, fg="#6D6D6D",bg = "#FAFAFA")
 
-            labelWithTaskName.place(x = 100, y = 100)
-            labelWithTaskDes.place(x=200, y=200)
+            textWithNameTask = Entry(root,font = "arial 28", bd=0,highlightthickness=0, relief='ridge',bg = "#EDEDED",fg = "#545454",width  = 41)
+            textWithNameTask.insert(1, arrayTaskName[indextask])
 
+            textWithDesTask = Text(root,bd=0, bg = "#EDEDED",fg = "#545454",font="Arial 28",width=41,height = 7)
+            textWithDesTask.insert(1.0, arrayTaskDes[indextask])
+
+            labelTaskName.place(x=198, y=180)
+            labelTaskDes.place(x=172, y=300)
+            textWithNameTask.place(x = 198, y = 240)
+            textWithDesTask.place(x = 198, y = 360)
 
 
         return readTaskE
