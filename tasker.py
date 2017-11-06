@@ -146,6 +146,12 @@ def TaskStr():
     def readTask(indextask):
         def readTaskE(event):
 
+            def fooo(e):
+                s = textWithNameTask.get().strip()
+                s = s[-1] if s else ''
+                textWithNameTask.delete('60', END)
+
+
             root["bg"] = "#FAFAFA"
 
             j = 0
@@ -175,6 +181,8 @@ def TaskStr():
             labelTaskDes.place(x=172, y=300)
             textWithNameTask.place(x = 198, y = 240)
             textWithDesTask.place(x = 198, y = 360)
+
+            textWithNameTask.bind('<KeyRelease>', fooo)
 
 
         return readTaskE
