@@ -144,6 +144,7 @@ def TaskStr():
 
 
     def readTask(indextask):
+
         def readTaskE(event):
 
             def fooo(e):
