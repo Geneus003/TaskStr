@@ -11,7 +11,10 @@ import os.path
 root = Tk()
 root.minsize(width=1280, height=720)
 
+global lastIDTaskOpen
+
 checkDB = os.path.isfile('test.db')
+checkID = os.path.isfile('taskID.txt')
 
 if checkDB == True:
     print("hello")
@@ -19,8 +22,19 @@ else:
     taskStrDB = sqlite3.connect('test.db')
     taskStrDB.execute('''CREATE TABLE TASK
         (NAME         TEXT    NOT NULL,
-        TEXT           TEXT     NOT NULL);''')
+        TEXT           TEXT     NOT NULL,
+        ID           INT    NOT NULL);''')
     taskStrDB.close()
+
+
+if checkID == True:
+    lastIDTaskOpen = open("taskID.txt")
+    lastIDTask = lastIDTaskOpen.read()
+    print(lastIDTask)
+
+else:
+    lastIDTaskOpen = open("taskID.txt","w")
+
 
 
 def printit():
@@ -36,13 +50,15 @@ def fromCreateTaskSave(event):
 
     taskStrDB = sqlite3.connect('test.db')
 
+    idtask = 1
+
     nameOfTaskCreate = titleEntCreate.get().strip()
     textTextCreate = DescriptionCreateText.get('1.0', END)
     textTextCreate = textTextCreate[0:-1]
     print(nameOfTaskCreate,textTextCreate)
-    params = (nameOfTaskCreate,textTextCreate)
+    params = (nameOfTaskCreate,textTextCreate,idtask)
 
-    taskStrDB.execute("INSERT INTO TASk VALUES (?, ?)", params)
+    taskStrDB.execute("INSERT INTO TASk VALUES (?, ?, ?)", params)
 
     taskStrDB.commit()
     taskStrDB.close()
@@ -195,11 +211,13 @@ def TaskStr():
         global arrayTaskCreateLabel
         global arrayTaskDesLabel
         global i
+        global arrayIdTask
 
         arrayTaskName = []
         arrayTaskDes = []
         arrayTaskCreateLabel = []
         arrayTaskDesLabel = []
+        arrayIdTask = []
 
 
         i = 0
@@ -208,21 +226,25 @@ def TaskStr():
             arrayTaskDes.append(i)
             arrayTaskCreateLabel.append(i)
             arrayTaskDesLabel.append(i)
+            arrayIdTask.append(i)
+
 
 
         taskStrDB = sqlite3.connect('test.db')
-        cursorTask = taskStrDB.execute("SELECT name, text from TASK")
+        cursorTask = taskStrDB.execute("SELECT name, text, id from TASK")
 
         i = 0
         for row in cursorTask:
             arrayTaskName[i]= row[0]
             arrayTaskDes[i] = row[1]
+            arrayIdTask[i] = row[2]
             i = i + 1
 
         j = 0
         for j in range(i):
             print (arrayTaskName[j])
-            print (arrayTaskDes[j] , '\n')
+            print (arrayTaskDes[j])
+            print(arrayIdTask[j])
 
         taskStrDB.close()
 
