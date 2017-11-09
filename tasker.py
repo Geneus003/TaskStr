@@ -11,29 +11,37 @@ import os.path
 root = Tk()
 root.minsize(width=1280, height=720)
 
-global lastIDTaskOpen
 
 checkDB = os.path.isfile('test.db')
 checkID = os.path.isfile('taskID.txt')
 
-if checkDB == True:
-    print("hello")
-else:
-    taskStrDB = sqlite3.connect('test.db')
-    taskStrDB.execute('''CREATE TABLE TASK
-        (NAME         TEXT    NOT NULL,
-        TEXT           TEXT     NOT NULL,
-        ID           INT    NOT NULL);''')
-    taskStrDB.close()
+def taskDBandID():
+    if checkDB == True:
+        print("hello im DB")
+    else:
+        taskStrDB = sqlite3.connect('test.db')
+        taskStrDB.execute('''CREATE TABLE TASK
+            (NAME         TEXT    NOT NULL,
+            TEXT           TEXT     NOT NULL,
+            ID           INT    NOT NULL);''')
+        taskStrDB.close()
 
 
-if checkID == True:
-    lastIDTaskOpen = open("taskID.txt")
-    lastIDTask = lastIDTaskOpen.read()
-    print(lastIDTask)
+    global lastIDTask
 
-else:
-    lastIDTaskOpen = open("taskID.txt","w")
+    if checkID == True:
+        lastIDTaskOpen = open("taskID.txt")
+        lastIDTask = lastIDTaskOpen.read()
+        lastIDTaskOpen.close()
+    else:
+        lastIDTaskOpen = open("taskID.txt","w")
+        lastIDTaskOpen.write('0')
+        lastIDTask = "0"
+        lastIDTaskOpen.close()
+
+    lastIDTask = int(lastIDTask)
+
+taskDBandID()
 
 
 
@@ -48,9 +56,20 @@ def printit():
 
 def fromCreateTaskSave(event):
 
+    global lastIDTask
+
+    idtask = lastIDTask + 1
+    lastIDTask = lastIDTask + 1
+
+    lastIDTaskStr = str(lastIDTask)
+
+    lastIDTaskOpen = open("taskID.txt", "w")
+    lastIDTaskOpen.write(lastIDTaskStr)
+    lastIDTaskOpen.close()
+
+
     taskStrDB = sqlite3.connect('test.db')
 
-    idtask = 1
 
     nameOfTaskCreate = titleEntCreate.get().strip()
     textTextCreate = DescriptionCreateText.get('1.0', END)
