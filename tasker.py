@@ -182,6 +182,13 @@ def TaskStr():
 
         def readTaskE(event):
 
+            editImgBut = ImageTk.PhotoImage(file="Pictures/TaskStr/edit.png")
+
+            butEditTopRead = Button(root, text='Create', bg='#f3655d', font='Arial 20', fg='#dbe0e4', bd=0,highlightthickness=0, relief='ridge', image=editImgBut)
+
+            butEditTopRead.image = editImgBut
+
+
             def fooo(e):
                 s = textWithNameTask.get().strip()
                 s = s[-1] if s else ''
@@ -217,6 +224,7 @@ def TaskStr():
             labelTaskDes.place(x=172, y=300)
             textWithNameTask.place(x = 198, y = 240)
             textWithDesTask.place(x = 198, y = 360)
+            butEditTopRead.place(x=880, y=18)
 
             textWithNameTask.bind('<KeyRelease>', fooo)
 
