@@ -119,7 +119,35 @@ def fromReadTask(event):
     textWithDesTask.destroy()
 
     TaskStr()
-    
+
+def fromReadTaskEdit(event):
+
+    taskStrDB = sqlite3.connect('test.db')
+
+    newTaskName =  textWithNameTask.get().strip()
+    newTaskDes =  textWithDesTask.get('1.0', END)
+    newTaskDes = newTaskDes[0:-1]
+
+    paramsName = (newTaskName,indexTaskEdit)
+    paramsDes = (newTaskDes,indexTaskEdit)
+
+    taskStrDB.execute("UPDATE TASK set NAME = ? where ID= ?", paramsName)
+    taskStrDB.execute("UPDATE TASK set TEXT = ? where ID= ?", paramsDes)
+
+    taskStrDB.commit()
+
+    taskStrDB.close()
+
+
+    butCancelTopRead.destroy()
+    butEditTopRead.destroy()
+    labelTaskName.destroy()
+    labelTaskDes.destroy()
+    textWithNameTask.destroy()
+    textWithDesTask.destroy()
+
+    TaskStr()
+
 
 
 def TaskStr():
@@ -194,6 +222,9 @@ def TaskStr():
 
         def readTaskE(event):
 
+            global indexTaskEdit
+            indexTaskEdit = indextask + 1
+
             global butCancelTopRead
             global butEditTopRead
             global labelTaskName
@@ -252,6 +283,7 @@ def TaskStr():
 
             textWithNameTask.bind('<KeyRelease>', fooo)
             butCancelTopRead.bind("<Button->",fromReadTask)
+            butEditTopRead.bind("<Button->",fromReadTaskEdit)
 
 
         return readTaskE
