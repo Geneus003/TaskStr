@@ -109,6 +109,18 @@ def fromCreateTask(event):
     TaskStr()
 
 
+def fromReadTask(event):
+
+    butCancelTopRead.destroy()
+    butEditTopRead.destroy()
+    labelTaskName.destroy()
+    labelTaskDes.destroy()
+    textWithNameTask.destroy()
+    textWithDesTask.destroy()
+
+    TaskStr()
+    
+
 
 def TaskStr():
 
@@ -182,6 +194,14 @@ def TaskStr():
 
         def readTaskE(event):
 
+            global butCancelTopRead
+            global butEditTopRead
+            global labelTaskName
+            global labelTaskDes
+            global textWithNameTask
+            global textWithDesTask
+
+
             editImgBut = ImageTk.PhotoImage(file="Pictures/TaskStr/edit.png")
             cancelImgBut = ImageTk.PhotoImage(file="Pictures/TaskStr/cancel.png")
 
@@ -229,7 +249,9 @@ def TaskStr():
             textWithDesTask.place(x = 198, y = 360)
             butEditTopRead.place(x=880, y=18)
             butCancelTopRead.place(x=230,y = 18)
+
             textWithNameTask.bind('<KeyRelease>', fooo)
+            butCancelTopRead.bind("<Button->",fromReadTask)
 
 
         return readTaskE
