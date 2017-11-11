@@ -184,7 +184,6 @@ def TaskStr():
         butTaskstr.destroy()
         butRemoveTop.destroy()
         butCalc.destroy()
-        butEditTop.destroy()
         butCreateTop.destroy()
 
         cancelCreateTaskButImg = ImageTk.PhotoImage(file = "Pictures/TaskStr/cancel.png")
@@ -261,7 +260,6 @@ def TaskStr():
             butTaskstr.destroy()
             butRemoveTop.destroy()
             butCalc.destroy()
-            butEditTop.destroy()
             butCreateTop.destroy()
 
 
@@ -355,7 +353,6 @@ def TaskStr():
 
 
     createImgBut = ImageTk.PhotoImage(file="Pictures/TaskStr/create.png")
-    editImgBut = ImageTk.PhotoImage(file="Pictures/TaskStr/edit.png")
     removeImgBut = ImageTk.PhotoImage(file="Pictures/TaskStr/remove.png")
 
     global a
@@ -369,12 +366,10 @@ def TaskStr():
     butTaskstr = Button(root,text="TaskStr", bg='#f3655d', bd=0, font='Arial 20', height=2, width=9, fg='#dbe0e4')
     butCalc = Button(root,text="Calc", bg='#f3655d', bd=0, font='Arial 20', height=2, width=9, fg='#dbe0e4')
     butCreateTop = Button(root,text='Create', bg='#f3655d', font='Arial 20', fg='#dbe0e4', bd=0,highlightthickness=0, relief='ridge',image = createImgBut)
-    butEditTop = Button(root,text='Edit', bg='#f3655d', font='Arial 20', fg='#dbe0e4', bd=0,highlightthickness=0, relief='ridge',image = editImgBut)
     butRemoveTop = Button(root,text='Remove', bg='#f3655d', font='Arial 20', fg='#dbe0e4', bd=0,image =  removeImgBut,highlightthickness=0, relief='ridge' )
     labelTime = Label(root, text="19:34", font="Arial 40", height=1, width=5, bd=0, bg='#ea5048', fg="white")
 
     butCreateTop.image = createImgBut
-    butEditTop.image = editImgBut
     butRemoveTop.image = removeImgBut
 
 
@@ -382,8 +377,7 @@ def TaskStr():
     Timing.start()
 
     labelTime.place(x=0, y=30)
-    butRemoveTop.place(x=640, y=18)
-    butEditTop.place(x=930, y=18)
+    butRemoveTop.place(x=900, y=18)
     butCreateTop.place(x=350, y=18)
     butTaskstr.place(x=0, y=150)
     butCalc.place(x=0, y=237)
