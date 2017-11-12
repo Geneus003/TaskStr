@@ -15,6 +15,12 @@ root.minsize(width=1280, height=720)
 checkDB = os.path.isfile('test.db')
 checkID = os.path.isfile('taskID.txt')
 
+def exitProgram():
+    print("Good")
+    root.destroy()
+
+root.protocol("WM_DELETE_WINDOW",exitProgram)
+
 def taskDBandID():
     if checkDB == True:
         print("hello im DB")
@@ -330,11 +336,11 @@ def TaskStr():
 
         taskStrDB.close()
 
-        j = 0
+
         y1 = 150
         y2 = 213
 
-        for j in  range (i):
+        for j in  range (0,i,1):
             arrayTaskDesLabel[j] = Label(root, text = arrayTaskDes[j], fg = "#767676", font = "Arial 19",width = 46, height = 1,anchor = "nw",pady = 3,padx = 60,bg = "#EEEFF0")
             arrayTaskCreateLabel[j] = Label(root,text = arrayTaskName[j], fg = "#494949", font = "Arial 30",width = 30,anchor = "nw",height = 1,pady = 10,padx = 60,bg = "#EEEFF0" )
             arrayTaskDesLabel[j].bind('<Button->',readTask(j))
