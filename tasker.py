@@ -8,6 +8,8 @@ from PIL import ImageTk
 import sqlite3
 import os.path
 
+import BD
+
 root = Tk()
 root.minsize(width=1280, height=720)
 
@@ -15,40 +17,23 @@ root.minsize(width=1280, height=720)
 checkDB = os.path.isfile('test.db')
 checkID = os.path.isfile('taskID.txt')
 
-def exitProgram():
-    print("Good")
-    root.destroy()
-
-root.protocol("WM_DELETE_WINDOW",exitProgram)
 
 def taskDBandID():
     if checkDB == True:
         print("hello im DB")
     else:
-        taskStrDB = sqlite3.connect('test.db')
-        taskStrDB.execute('''CREATE TABLE TASK
-            (NAME         TEXT    NOT NULL,
-            TEXT           TEXT     NOT NULL,
-            ID           INT    NOT NULL);''')
-        taskStrDB.close()
-
+        BD.createDB()
 
     global lastIDTask
 
     if checkID == True:
-        lastIDTaskOpen = open("taskID.txt")
-        lastIDTask = lastIDTaskOpen.read()
-        lastIDTaskOpen.close()
+        lastIDTask = BD.WhatsID()
     else:
-        lastIDTaskOpen = open("taskID.txt","w")
-        lastIDTaskOpen.write('0')
-        lastIDTask = "0"
-        lastIDTaskOpen.close()
+        lastIDTask = BD.createID()
 
     lastIDTask = int(lastIDTask)
 
 taskDBandID()
-
 
 
 def printit():
@@ -59,34 +44,7 @@ def printit():
         labelTime.configure(text=ab)
         time.sleep(1)
 
-
-def fromCreateTaskSave(event):
-
-    global lastIDTask
-
-    idtask = lastIDTask + 1
-    lastIDTask = lastIDTask + 1
-
-    lastIDTaskStr = str(lastIDTask)
-
-    lastIDTaskOpen = open("taskID.txt", "w")
-    lastIDTaskOpen.write(lastIDTaskStr)
-    lastIDTaskOpen.close()
-
-
-    taskStrDB = sqlite3.connect('test.db')
-
-
-    nameOfTaskCreate = titleEntCreate.get().strip()
-    textTextCreate = DescriptionCreateText.get('1.0', END)
-    textTextCreate = textTextCreate[0:-1]
-    print(nameOfTaskCreate,textTextCreate)
-    params = (nameOfTaskCreate,textTextCreate,idtask)
-
-    taskStrDB.execute("INSERT INTO TASk VALUES (?, ?, ?)", params)
-
-    taskStrDB.commit()
-    taskStrDB.close()
+def destroyCreateTask():
 
     labelCreateTask.destroy()
     DescriptionCreateText.destroy()
@@ -97,25 +55,7 @@ def fromCreateTaskSave(event):
     titleCreateLabel.destroy()
     toppart1.destroy()
 
-    TaskStr()
-
-
-def fromCreateTask(event):
-
-
-    labelCreateTask.destroy()
-    DescriptionCreateText.destroy()
-    DescriptionCreateLabel.destroy()
-    titleEntCreate.destroy()
-    saveCreateBut.destroy()
-    cancelCreateBut.destroy()
-    titleCreateLabel.destroy()
-    toppart1.destroy()
-
-    TaskStr()
-
-
-def fromReadTask(event):
+def destroyReadTask():
 
     butCancelTopRead.destroy()
     butEditTopRead.destroy()
@@ -124,11 +64,32 @@ def fromReadTask(event):
     textWithNameTask.destroy()
     textWithDesTask.destroy()
 
+
+def fromCreateTaskSave(event):
+
+    global lastIDTask
+
+    nameOfTaskCreate = titleEntCreate.get().strip()
+    textTextCreate = DescriptionCreateText.get('1.0', END)
+    textTextCreate = textTextCreate[0:-1]
+
+    BD.fromCreateTaskSave(lastIDTask , nameOfTaskCreate , textTextCreate)
+
+    destroyCreateTask()
+    TaskStr()
+
+
+def fromCreateTask(event):
+    destroyCreateTask()
+    TaskStr()
+
+def fromReadTask(event):
+    destroyReadTask()
     TaskStr()
 
 def fromReadTaskEdit(event):
 
-    taskStrDB = sqlite3.connect('test.db')
+    print(indexTaskEdit)
 
     newTaskName =  textWithNameTask.get().strip()
     newTaskDes =  textWithDesTask.get('1.0', END)
@@ -137,23 +98,9 @@ def fromReadTaskEdit(event):
     paramsName = (newTaskName,indexTaskEdit)
     paramsDes = (newTaskDes,indexTaskEdit)
 
-    taskStrDB.execute("UPDATE TASK set NAME = ? where ID= ?", paramsName)
-    taskStrDB.execute("UPDATE TASK set TEXT = ? where ID= ?", paramsDes)
-
-    taskStrDB.commit()
-
-    taskStrDB.close()
-
-
-    butCancelTopRead.destroy()
-    butEditTopRead.destroy()
-    labelTaskName.destroy()
-    labelTaskDes.destroy()
-    textWithNameTask.destroy()
-    textWithDesTask.destroy()
-
+    BD.fromReadTaskEdit(paramsDes,paramsName)
+    destroyReadTask()
     TaskStr()
-
 
 
 def TaskStr():
@@ -185,12 +132,12 @@ def TaskStr():
 
         root["bg"] = "#FAFAFA"
 
-        labelTime.destroy()
         leftpart1.destroy()
         butTaskstr.destroy()
         butRemoveTop.destroy()
         butCalc.destroy()
         butCreateTop.destroy()
+        labelTime.destroy()
 
         cancelCreateTaskButImg = ImageTk.PhotoImage(file = "Pictures/TaskStr/cancel.png")
         saveCreateTaskButImg = ImageTk.PhotoImage(file = "Pictures/TaskStr/save.png")
@@ -307,7 +254,6 @@ def TaskStr():
         arrayTaskDesLabel = []
         arrayIdTask = []
 
-
         i = 0
         for i in range(1000):
             arrayTaskName.append(i)
@@ -327,12 +273,6 @@ def TaskStr():
             arrayTaskDes[i] = row[1]
             arrayIdTask[i] = row[2]
             i = i + 1
-
-        j = 0
-        for j in range(i):
-            print (arrayTaskName[j])
-            print (arrayTaskDes[j])
-            print(arrayIdTask[j])
 
         taskStrDB.close()
 
