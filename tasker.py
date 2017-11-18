@@ -264,17 +264,7 @@ def TaskStr():
 
 
 
-        taskStrDB = sqlite3.connect('test.db')
-        cursorTask = taskStrDB.execute("SELECT name, text, id from TASK")
-
-        i = 0
-        for row in cursorTask:
-            arrayTaskName[i]= row[0]
-            arrayTaskDes[i] = row[1]
-            arrayIdTask[i] = row[2]
-            i = i + 1
-
-        taskStrDB.close()
+        i,arrayTaskName,arrayTaskDes,arrayIdTask = BD.fillArr(i,arrayTaskName,arrayTaskDes,arrayIdTask)
 
 
         y1 = 150

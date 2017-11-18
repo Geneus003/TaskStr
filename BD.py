@@ -48,6 +48,7 @@ def fromCreateTaskSave(lastIDTask , nameOfTaskCreate , textTextCreate):
 
 
 def fromReadTaskEdit(paramsDes,paramsName):
+
     taskStrDB = sqlite3.connect('test.db')
 
     taskStrDB.execute("UPDATE TASK set NAME = ? where ID= ?", paramsName)
@@ -57,6 +58,7 @@ def fromReadTaskEdit(paramsDes,paramsName):
     taskStrDB.close()
 
 def fillArr(i,arrayTaskName,arrayTaskDes,arrayIdTask):
+
     taskStrDB = sqlite3.connect('test.db')
     cursorTask = taskStrDB.execute("SELECT name, text, id from TASK")
 
