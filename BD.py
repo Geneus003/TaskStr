@@ -29,7 +29,7 @@ def WhatsID():
 def fromCreateTaskSave(lastIDTask , nameOfTaskCreate , textTextCreate):
 
     idtask = lastIDTask + 1
-    lastIDTask = lastIDTask + 1
+    lastIDTask += 1
 
     lastIDTaskStr = str(lastIDTask)
 
